@@ -57,10 +57,10 @@ run_klee() {
 
 	local solving_opt="--solver-backend=${solver} --ignore-solver-failures --simplify-sym-indices --use-forked-solver --use-query-log=all:kquery,solver:kquery"
 	local debug_opt="--debug-print-instructions=all:file"
-	local external_call_opt="--external-call=concrete"
+	local external_call_opt="--external-calls=all"
 	local linking_opt="--libc=uclibc --posix-runtime"
-	local module_opt="--output-module --output-source --switch-type=internal --disable-inlining"
-	local search_opt="${searcher} --use-batching-search --batch-instructions=10000"
+	local module_opt="--output-module --output-source --switch-type=simple --disable-inlining"
+	local search_opt="${searcher}"
 	local startup_opt="--optimize"
 	local termination_opt="--max-memory=4000 --max-memory-inhibit --max-time=${max_time} --watchdog --run-in-dir=${run_in_dir} --output-dir=${output_dir}"
 	local statistics_opt="--output-istats --output-stats"
@@ -94,9 +94,10 @@ main() {
 		mkdir -p "${result_base}"
 	fi
 	
-	run_klee gcal dfs random-state stp 7200s
-	run_klee combine dfs random-state stp 7200s
-#	run_klee trueprint dfs random-state stp 7200s
+#	run_klee gcal dfs stp 7200s
+#	run_klee combine dfs stp 7200s
+#	run_klee trueprint dfs stp 7200s
+	run_klee make nurs:md2u random-state stp 7200s
 }
 
 main
